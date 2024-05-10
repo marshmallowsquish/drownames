@@ -7,6 +7,21 @@
   </head>
 
   <body>
+    <form>
+      <label for="number">Number of names to randomize:</label>
+      <input type="number" id="number" name="number" min="5" max="10000">
+
+      <label for="female">Female</label>
+      <input type="checkbox" id="female" name="female" value="female">
+      <label for="male">Male</label>
+      <input type="checkbox" id="male" name="male" value="male">
+      <label for="neutral">Gender neutral</label>
+      <input type="checkbox" id="neutral" name="neutral" value="neutral">
+
+      <input type="submit" value="submit">
+    </form>
+
+    <div id="content-area"></div>
 
     <script src="script.js"></script>
   </body>
