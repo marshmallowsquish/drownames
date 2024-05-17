@@ -3,6 +3,11 @@
 //selectors
 const contentArea = document.getElementById("content-area");
 
+const randomizeButton = document.getElementById("randomize-button");
+
+//working values
+let numberOfNames = document.getElementById("number").value;
+
 //objects
 const prefix = {
   1: {
@@ -927,15 +932,15 @@ const suffix = {
   meaning: "Ascension, love, lover, lust"
   },
   54: {
-  female: "",
-  male: "",
-  gn: "onia}-onim",
+  female: "onia",
+  male: "onim",
+  gn: "",
   meaning: "Rod, staff, token, wand"
   },
   55: {
-  female: "",
-  male: "",
-  gn: "oyss}-omph",
+  female: "oyss",
+  male: "omph",
+  gn: "",
   meaning: "Binder, judge, law, prison"
   },
   56: {
@@ -945,44 +950,44 @@ const suffix = {
   meaning: "Ally, caller, kin"
   },
   57: {
-  female: "",
-  male: "",
-  gn: "quarra}-net",
+  female: "quarra",
+  male: "net",
+  gn: "",
   meaning: "Horde, host, legion"
   },
   58: {
-  female: "",
-  male: "",
-  gn: "quiri}-oj",
+  female: "quiri",
+  male: "oj",
+  gn: "",
   meaning: "Aura, cloak, hide, skin"
   },
   59: {
-  female: "",
-  male: "",
-  gn: "ra}-or",
+  female: "ra",
+  male: "or",
+  gn: "",
   meaning: "Fool, game, prey, quarry"
   },
   60: {
   female: "rae",
-  male: "-rar",
+  male: "rar",
   gn: "",
   meaning: "Secret, seeker, quest"
   },
   61: {
   female: "raema",
-  male: "-orvir",
+  male: "orvir",
   gn: "",
   meaning: "Crafter, fist, hand"
   },
   62: {
   female: "raena",
-  male: "-olvir",
+  male: "olvir",
   gn: "",
   meaning: "Center, haven, home"
   },
   63: {
   female: "riia",
-  male: "-rak",
+  male: "rak",
   gn: "",
   meaning: "Chaos, storm, tempest"
   },
@@ -994,56 +999,56 @@ const suffix = {
   },
   65: {
   female: "riina",
-  male: "-ree",
+  male: "ree",
   gn: "",
   meaning: "Enchanter, mage, spellcaster"
   },
   66: {
-  female: "",
-  male: "",
-  gn: "ryna}-oyn",
+  female: "ryna",
+  male: "oyn",
+  gn: "",
   meaning: "Follower, hired, mercenary"
   },
   67: {
-  female: "",
-  male: "",
-  gn: "ryne}-ryn",
+  female: "ryne",
+  male: "ryn",
+  gn: "",
   meaning: "Blooded, elder, experienced"
   },
   68: {
-  female: "",
-  male: "",
-  gn: "shalee}-ral",
+  female: "shalee",
+  male: "ral",
+  gn: "",
   meaning: "Abjurer, gaze, watch, watcher"
   },
   69: {
-  female: "",
-  male: "",
-  gn: "ssysn}-rysn",
+  female: "ssysn",
+  male: "rysn",
+  gn: "",
   meaning: "Artifact, sorcerer, spell"
   },
   70: {
-  female: "",
-  male: "",
-  gn: "stin}-trin",
+  female: "stin",
+  male: "trin",
+  gn: "",
   meaning: "Clan, house, merchant, of the house"
   },
   71: {
-  female: "",
-  male: "",
-  gn: "stra}-tran",
+  female: "stra",
+  male: "tran",
+  gn: "",
   meaning: "Spider, spinner, weaver"
   },
   72: {
-  female: "",
-  male: "",
-  gn: "tana}-ton",
+  female: "tana",
+  male: "ton",
+  gn: "",
   meaning: "Darkness, lurker, prowler"
   },
   73: {
-  female: "",
-  male: "",
-  gn: "thara}-tar",
+  female: "thara",
+  male: "tar",
+  gn: "",
   meaning: "Glyph, marker, rune"
   },
   74: {
@@ -1211,19 +1216,105 @@ const suffix = {
 }
 
 /* DECLARE FUNCTIONS */
-function createTable() {
+function createTable(pre, suf) {
+  let name = getName(pre, suf);
 
+  let table = document.createElement("table");
+  let caption = document.createElement("caption");
+  caption.textContent = name;
+  let thead = document.createElement("thead");
+  let tbody = document.createElement("tbody");
+
+  contentArea.appendChild(table);
+  table.appendChild(caption);
+  table.appendChild(thead);
+  table.appendChild(tbody);
+
+  let tableHeadings = document.createElement("tr");
+  let fName = document.createElement("th");
+  fName.textContent = "Female";
+  let mName = document.createElement("th");
+  mName.textContent = "Male";
+  let gnName = document.createElement("th");
+  gnName.textContent = "Gender-neutral";
+  let meaning = document.createElement("th");
+  meaning.textContent = "Meaning";
+
+  thead.appendChild(tableHeadings);
+  tableHeadings.appendChild(fName);
+  tableHeadings.appendChild(mName);
+  tableHeadings.appendChild(gnName);
+  tableHeadings.appendChild(meaning);
+
+  let prefixRow = document.createElement("tr");
+  let preFName = document.createElement("td");
+  preFName.textContent = pre.female;
+  let preMName = document.createElement("td");
+  preMName.textContent = pre.male;
+  let preGnName = document.createElement("td");
+  preGnName.textContent = pre.gn;
+  let preMeaning = document.createElement("td");
+  preMeaning.textContent = pre.meaning;
+
+  tbody.appendChild(prefixRow);
+  prefixRow.appendChild(preFName);
+  prefixRow.appendChild(preMName);
+  prefixRow.appendChild(preGnName);
+  prefixRow.appendChild(preMeaning);
+
+  let suffixRow = document.createElement("tr");
+  let sufFName = document.createElement("td");
+  sufFName.textContent = suf.female;
+  let sufMName = document.createElement("td");
+  sufMName.textContent = suf.male;
+  let sufGnName = document.createElement("td");
+  sufGnName.textContent = suf.gn;
+  let sufMeaning = document.createElement("td");
+  sufMeaning.textContent = suf.meaning;
+
+  tbody.appendChild(suffixRow);
+  suffixRow.appendChild(sufFName);
+  suffixRow.appendChild(sufMName);
+  suffixRow.appendChild(sufGnName);
+  suffixRow.appendChild(sufMeaning);
 }
 
 function randomizeNames() {
-  contentArea.textContent = `${prefix[getNumber()].female}${suffix[getNumber()].female}`
+  contentArea.textContent = "";
+  numberOfNames = document.getElementById("number").value;
+
+  for (let i = 0; i < numberOfNames; i++) {
+    createTable(prefix[getNumber()], suffix[getNumber()]);
+  }
+}
+
+function getName(pre, suf) {
+  let first = "";
+  let last = "";
+
+  if (pre.female !== "") {
+    first = pre.female;
+  } else {
+    first = pre.gn;
+  }
+
+  if (suf.female !== "") {
+    last = suf.female;
+  } else {
+    last = suf.gn;
+  }
+
+  return `${first}${last}`
 }
 
 function getNumber() {
-  return Math.floor(Math.random() * 100);
+  return Math.floor(Math.random() * 100) + 1;
 }
 
 /* DECLARE EVENT HANDLERS */
+randomizeButton.addEventListener("click", function () {
+  randomizeNames();
+})
 
 /* DECLARE NAMESPACES */
 
