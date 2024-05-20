@@ -65,6 +65,10 @@ td {
 }
 
 #gn-button {
+  background-color: hsl(276, 100%, 90%);
+}
+
+#gn-button.selected {
   background-color: hsl(276, 100%, 70%);
 }
 

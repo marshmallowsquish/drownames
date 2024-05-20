@@ -3,6 +3,7 @@
 //selectors
 const contentArea = document.getElementById("content-area");
 const randomizeButton = document.getElementById("randomize-button");
+const gnButton = document.getElementById("gn-button");
 
 //objects
 const prefix = {
@@ -307,9 +308,9 @@ const prefix = {
   meaning: "Brand, branded, owned, slave"
   },
   51: {
-  female: "",
-  male: "",
-  gn: "Lua}Lyme",
+  female: "Lua",
+  male: "Lyme",
+  gn: "",
   meaning: "Bright, crystal, light"
   },
   52: {
@@ -1211,6 +1212,17 @@ const suffix = {
   }
 }
 
+const gnPrefix = []
+for (const prop in prefix) {
+  if (prefix[prop].female === "") gnPrefix.push(prefix[prop]);
+}
+
+const gnSuffix = []
+for (const prop in suffix) {
+  if (suffix[prop].female === "") gnSuffix.push(suffix[prop]);
+}
+
+
 //working values
 let numberOfNames = document.getElementById("number").value;
 
@@ -1221,9 +1233,14 @@ function createTable(pre, suf) {
 
   let table = document.createElement("table");
   let caption = document.createElement("caption");
-  caption.textContent = `Female: ${femaleName} \u00A0 \u00A0|\u00A0 \u00A0 Male: ${maleName}`
   let thead = document.createElement("thead");
   let tbody = document.createElement("tbody");
+
+  if (!gnButton.classList.contains("selected")) {
+    caption.textContent = `Female: ${femaleName} \u00A0 \u00A0|\u00A0 \u00A0 Male: ${maleName}`
+  } else {
+    caption.textContent = `Gender-neutral: ${pre.gn}${suf.gn}`
+  }
 
   contentArea.appendChild(table);
   table.appendChild(caption);
@@ -1284,7 +1301,11 @@ function randomizeNames() {
   numberOfNames = document.getElementById("number").value;
 
   for (let i = 0; i < numberOfNames; i++) {
-    createTable(prefix[getNumber()], suffix[getNumber()]);
+    if (!gnButton.classList.contains("selected")) {
+      createTable(prefix[getNumber(100) + 1], suffix[getNumber(100) + 1]);
+    } else {
+      createTable(gnPrefix[getNumber(11)], gnSuffix[getNumber(21)]);
+    }
   }
 }
 
@@ -1326,13 +1347,21 @@ function getMaleName(pre, suf) {
   return `${first}${last}`
 }
 
-function getNumber() {
-  return Math.floor(Math.random() * 100) + 1;
+function getNumber(num) {
+  return Math.floor(Math.random() * num);
 }
 
 /* DECLARE EVENT HANDLERS */
 randomizeButton.addEventListener("click", function () {
   randomizeNames();
+})
+
+gnButton.addEventListener("click", function() {
+  if (!this.classList.contains("selected")) {
+    this.classList.add("selected");
+  } else {
+    this.classList.remove("selected");
+  }
 })
 
 /* DECLARE NAMESPACES */
