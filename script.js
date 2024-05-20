@@ -2,11 +2,7 @@
 
 //selectors
 const contentArea = document.getElementById("content-area");
-
 const randomizeButton = document.getElementById("randomize-button");
-
-//working values
-let numberOfNames = document.getElementById("number").value;
 
 //objects
 const prefix = {
@@ -546,7 +542,7 @@ const prefix = {
   },
   90: {
   female: "Vier",
-  male: "Va l",
+  male: "Val",
   gn: "",
   meaning: "Black, dark, darkness"
   },
@@ -1215,13 +1211,17 @@ const suffix = {
   }
 }
 
+//working values
+let numberOfNames = document.getElementById("number").value;
+
 /* DECLARE FUNCTIONS */
 function createTable(pre, suf) {
-  let name = getName(pre, suf);
+  let femaleName = getFemaleName(pre, suf);
+  let maleName = getMaleName(pre, suf);
 
   let table = document.createElement("table");
   let caption = document.createElement("caption");
-  caption.textContent = name;
+  caption.textContent = `Female: ${femaleName} \u00A0 \u00A0|\u00A0 \u00A0 Male: ${maleName}`
   let thead = document.createElement("thead");
   let tbody = document.createElement("tbody");
 
@@ -1288,7 +1288,7 @@ function randomizeNames() {
   }
 }
 
-function getName(pre, suf) {
+function getFemaleName(pre, suf) {
   let first = "";
   let last = "";
 
@@ -1300,6 +1300,25 @@ function getName(pre, suf) {
 
   if (suf.female !== "") {
     last = suf.female;
+  } else {
+    last = suf.gn;
+  }
+
+  return `${first}${last}`
+}
+
+function getMaleName(pre, suf) {
+  let first = "";
+  let last = "";
+
+  if (pre.male !== "") {
+    first = pre.male;
+  } else {
+    first = pre.gn;
+  }
+
+  if (suf.male !== "") {
+    last = suf.male;
   } else {
     last = suf.gn;
   }
